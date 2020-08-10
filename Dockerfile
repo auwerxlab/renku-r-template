@@ -30,11 +30,11 @@ USER ${NB_USER}
 RUN Rscript -e "setwd('/home/rstudio'); install.packages('renv', dependencies=TRUE); renv::init(force = TRUE)"
 
 ## Install the required R libraries on the docker image
-COPY renv.lock /home/rstudio/renv.lock
-RUN Rscript -e "setwd('/home/rstudio'); .libPaths(file.path(getwd(), 'renv', list.files('renv', pattern = 'lib'), paste('R-', version$major, '.', strsplit(as.character(version$minor), '')[[1]][1], sep = ''), version$platform)); renv::restore()"
+#COPY renv.lock /home/rstudio/renv.lock
+#RUN Rscript -e "setwd('/home/rstudio'); .libPaths(file.path(getwd(), 'renv', list.files('renv', pattern = 'lib'), paste('R-', version$major, '.', strsplit(as.character(version$minor), '')[[1]][1], sep = ''), version$platform)); renv::restore()"
 
 ## Clean up the /home/rstudio directory to avoid confusion in nested R projects
-RUN rm /home/rstudio/.Rprofile
+#RUN rm /home/rstudio/.Rprofile
 
 # install the python dependencies
 COPY requirements.txt /tmp/
