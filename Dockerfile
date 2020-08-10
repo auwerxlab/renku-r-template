@@ -3,20 +3,38 @@ FROM renku/renkulab:renku0.10.3-r3.6.1-0.6.2
 # Uncomment and adapt if code is to be included in the image
 # COPY src /code/src
 
-# Uncomment and adapt if your R or python packages require extra linux (ubuntu) software
-# e.g. the following installs apt-utils and vim; each pkg on its own line, all lines
-# except for the last end with backslash '\' to continue the RUN line
-#
-# USER root
-# RUN apt-get update && \
-#    apt-get install -y --no-install-recommends \
-#    apt-utils \
-#    vim
-# USER ${NB_USER}
+# Install system requirements
+USER root
+RUN apt-get -y update && \
+  apt-get clean && \
+  apt-get install -y --no-install-recommends \
+  apt-utils \
+  vim \
+    libncurses5-dev \
+    libncursesw5-dev \
+    libxml2-dev \
+    parallel \
+    libgit2-dev \
+    tk-dev \
+    zlib1g-dev \
+    texlive-full
 
-# install the R dependencies
-COPY install.R /tmp/
-RUN R -f /tmp/install.R
+# Add user to the sudoers
+RUN adduser ${NB_USER} sudo && \
+    echo "${NB_USER} ALL=(ALL:ALL) ALL" >> /etc/sudoers
+USER ${NB_USER}
+
+# Enable R package management with renv:
+
+## Install the renv R library
+RUN Rscript -e "setwd('/home/rstudio'); install.packages('renv', dependencies=TRUE); renv::init(force = TRUE)"
+
+## Install the required R libraries on the docker image
+COPY renv.lock /home/rstudio/renv.lock
+RUN Rscript -e "setwd('/home/rstudio'); .libPaths(file.path(getwd(), 'renv', list.files('renv', pattern = 'lib'), paste('R-', version$major, '.', strsplit(as.character(version$minor), '')[[1]][1], sep = ''), version$platform)); renv::restore()"
+
+## Clean up the /home/rstudio directory to avoid confusion in nested R projects
+RUN rm /home/rstudio/.Rprofile
 
 # install the python dependencies
 COPY requirements.txt /tmp/
