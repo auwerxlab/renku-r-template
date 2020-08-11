@@ -35,7 +35,7 @@ COPY renv.lock /home/rstudio/renv.lock
 RUN Rscript -e "setwd('/home/rstudio'); renv::restore(confirm = FALSE)"
 
 ## Clean up the /home/rstudio directory to avoid confusion in nested R projects
-RUN rm /home/rstudio/.Rprofile
+RUN rm /home/rstudio/.Rprofile; rm /home/rstudio/renv.lock
 
 # install the python dependencies
 COPY requirements.txt /tmp/
