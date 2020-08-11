@@ -27,11 +27,12 @@ USER ${NB_USER}
 # Enable R package management with renv:
 
 ## Install the renv R library
+RUN echo "options(renv.consent = TRUE)" >> /home/rstudio/.Rprofile
 RUN Rscript -e "setwd('/home/rstudio'); install.packages('renv', dependencies=TRUE); renv::init(force = TRUE)"
 
 ## Install the required R libraries on the docker image
 COPY renv.lock /home/rstudio/renv.lock
-RUN Rscript -e "setwd('/home/rstudio'); .libPaths(file.path(getwd(), 'renv', list.files('renv', pattern = 'lib'), paste('R-', version$major, '.', strsplit(as.character(version$minor), '')[[1]][1], sep = ''), version$platform)); renv::restore()"
+RUN Rscript -e "setwd('/home/rstudio'); renv::restore(confirm = FALSE)"
 
 ## Clean up the /home/rstudio directory to avoid confusion in nested R projects
 RUN rm /home/rstudio/.Rprofile
