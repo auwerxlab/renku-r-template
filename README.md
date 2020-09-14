@@ -1,3 +1,7 @@
+
+[![GitHub releases](https://img.shields.io/github/v/release/auwerxlab/renku-r-template)](https://github.com/auwerxlab/renku-r-template/releases)
+[![License: CC BY-NC 4.0](https://i.creativecommons.org/l/by-nc/4.0/88x31.png)](https://creativecommons.org/licenses/by-nc/4.0/)
+
 # renku-r-template
 
 This is a bare R project template that can be directly imported in [Renku](https://datascience.ch/renku).
@@ -21,14 +25,20 @@ The required dependencies are listed in the ``requirements.txt`` file located in
 
 1. Go to `GitLab` -> `New Project` -> `Import Project` -> `Repo by URL`
 2. Fill-in the essential fields:
-  - Git repository URL: https://github.com/auwerxlab/renku-r-template.git
-  - Project name: <your project name>
-  - Project slug: <your project slug>
+  * Git repository URL: https://github.com/auwerxlab/renku-r-template.git
+  * Project name: <your project name>
+  * Project slug: <your project slug>
 3. Click on `Create Project`.
-4. In your new project, update this README.md file with an appropriate description and commit your changes. You will find below a template for this.
+4. In your new project, update this README.md file with an appropriate description and commit your changes.
+  You will find below a template for this.
+  Also add an appropriate license.
 5. After completing a first commit, the project interactive environment gets accessible in the Renku UI.
 
 👍 That's it!
+
+## License
+
+This work is licensed under a [Creative Commons Attribution-NonCommercial 4.0 International License](http://creativecommons.org/licenses/by-nc/4.0/).
 
 _________________________
 ## ⬇️ README.md template ⬇️
@@ -67,28 +77,30 @@ This project uses Git and the git-lfs module to track files versions.
 
 ## Structure
 
-- ``data/``: Contains raw and processed data and metadata, including initial, intermediate data and final data and metadata.
-- ``notebooks/``: Contains computational notebooks used to process the data and metadata.
-- ``bin/``: Contains executable code.
-- ``figs/``: Contains figures.
-- ``.renku/``: Contains files used by the Renku platform and its associated ``renku`` python package.
+*Description of the directory tree structure.*
+
+* ``data/``: Contains raw and processed data and metadata, including initial, intermediate data and final data and metadata.
+* ``notebooks/``: Contains computational notebooks used to process the data and metadata.
+* ``bin/``: Contains executable code.
+* ``figs/``: Contains figures.
+* ``.renku/``: Contains files used by the Renku platform and its associated ``renku`` python package.
 
 ## Content
 
 *Description of the data, metadata and code used in this project. For example:*
 
-- **Data:** *How are data organized and used in this project? What is their source?*
-- **Metadata:** *How are metadata organized and used in this project? What is their source?*
-- **Code:** *How is the code organized and used in this project?*
+* **Data:** *How are data organized and used in this project? What is their source?*
+* **Metadata:** *How are metadata organized and used in this project? What is their source?*
+* **Code:** *How is the code organized and used in this project?*
 
 ## Related studies
 
 *Reference and description to any associated study. For example:*
 
-- **Study X**
-    - **Principal investigator:** *Name, contact and affiliation of the principal investigator.*
-    - **Associated funding:** *Reference to any funding.*
-    - **Associated publications:** *Links to any associated publications.*
+* **Study X**
+    * **Principal investigator:** *Name, contact and affiliation of the principal investigator.*
+    * **Associated funding:** *Reference to any funding.*
+    * **Associated publications:** *Links to any associated publications.*
 
 ## Contributors
 
@@ -104,4 +116,4 @@ This project uses Git and the git-lfs module to track files versions.
 
 ## Resources
 
-- This project is based on the following template: https://github.com/auwerxlab/renku-r-template.git
+* This project is based on the following template: https://github.com/auwerxlab/renku-r-template.git
