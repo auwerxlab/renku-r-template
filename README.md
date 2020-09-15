@@ -1,10 +1,10 @@
-
 [![GitHub releases](https://img.shields.io/github/v/release/auwerxlab/renku-r-template)](https://github.com/auwerxlab/renku-r-template/releases)
 [![License: CC BY-NC 4.0](https://i.creativecommons.org/l/by-nc/4.0/88x31.png)](https://creativecommons.org/licenses/by-nc/4.0/)
 
 # renku-r-template
 
-This is a bare R project template that can be directly imported in [Renku](https://datascience.ch/renku).
+This is a bare R project template that can be directly imported in [Renku](https://datascience.ch/renku). \
+(See the *Importing in Renku* section below)
 
 ## Environment
 
@@ -16,11 +16,12 @@ It allows to generate a docker image that runs an instance of R Studio server in
 You can change the R version that will be installed on the docker image by editing the ``FROM`` statement that specifies a base image in the ``Dockerfile``:
 
 ```
-FROM renku/renkulab:renku0.10.3-r3.6.1-0.6.2
+FROM renku/renkulab-r:4.0.0-renku0.10.4-0.6.3
 ```
 
-A list of available base images can be found at https://hub.docker.com/r/renku/renkulab/tags. \
-Chose one with the R version you want. For example, for R 3.6.0, you can chose the *renku0.10.3-r3.6.0-0.6.2* image.
+A list of available base images can be found at https://hub.docker.com/r/renku/renkulab-r/tags. \
+Chose one with the R version you want. For example, for R 3.6.2, you can chose the *3.6.2-renku0.10.4-0.6.3* image. \
+Don't forget to also update the R version in the ``renv.lock`` file (see the *R dependencies* section below).
 
 ### R dependencies
 
@@ -28,8 +29,17 @@ This project uses the [renv](https://rstudio.github.io/renv/articles/renv.html) 
 The ``renv.lock`` file is located in the main directory.
 
 Renv has been set to install R packages on this project's docker image. \
-Therefore, the ``renv/`` directory in the main directory of this sproject has been set as a symbolic link to the renv library located on the docker image. \
-The docker image build is set by the ``Dockerfile`` located in the main directory and you can change this behavior by editing the *Install the required R libraries on the docker image* section. Don't forget to also change the ``renv/`` link into a directory.
+Therefore, the ``renv/`` directory in the main directory of this project has been set as a symbolic link to the renv library located on the docker image, in the ``/home/rstudio`` directory. \
+To change this behavior, edit the ``install.R`` file located in the main directory. Don't forget to also change the ``renv`` link into an actual ``renv/`` directory.
+
+The prefered way to install additional R packages and manage them with renv is to use the ``install.packages()``
+command within an R session and to update the ``renv.lock`` file using the ``renv::snapshot(type="all")`` command. \
+As alternatives, you could :
+1. directly edit the ``renv.lock`` file - ⚠️ be sure to know what you are doing though. \
+OR
+2. add the ``install.packages()`` command to the ``install.R`` file. However, this will not update the project's ``renv.lock`` file unless you use ``renv::snapshot()`` in an R session.
+
+⚠️ If using Renku, whatever you do, don't forget to commit and push your changes to save them. ⚠️
 
 ### Python dependencies
 
@@ -41,8 +51,8 @@ They will be installed on the docker image with ``pip3`` (see the ``Dockerfile``
 1. Go to `GitLab` -> `New Project` -> `Import Project` -> `Repo by URL`
 2. Fill-in the essential fields:
   * Git repository URL: https://github.com/auwerxlab/renku-r-template.git
-  * Project name: <your project name>
-  * Project slug: <your project slug>
+  * Project name: *your-project-name*
+  * Project slug: *your-project-slug*
 3. Click on `Create Project`.
 4. In your new project, update this README.md file with an appropriate description and commit your changes.
   You will find a template for this purpose in the *README.md template* section below. \
@@ -81,11 +91,11 @@ It allows to generate a docker image that runs an instance of R Studio server in
 You can change the R version that will be installed on the docker image by editing the ``FROM`` statement that specifies a base image in the ``Dockerfile``:
 
 ```
-FROM renku/renkulab:renku0.10.3-r3.6.1-0.6.2
+FROM renku/renkulab-r:4.0.0-renku0.10.4-0.6.3
 ```
 
-A list of available base images can be found at https://hub.docker.com/r/renku/renkulab/tags. \
-Chose one with the R version you want. For example, for R 3.6.0, you can chose the *renku0.10.3-r3.6.0-0.6.2* image.
+A list of available base images can be found at https://hub.docker.com/r/renku/renkulab-r/tags. \
+Chose one with the R version you want. For example, for R 3.6.2, you can chose the *3.6.2-renku0.10.4-0.6.3* image.
 
 ### R dependencies
 
@@ -93,12 +103,21 @@ This project uses the [renv](https://rstudio.github.io/renv/articles/renv.html) 
 The ``renv.lock`` file is located in the main directory.
 
 Renv has been set to install R packages on this project's docker image. \
-Therefore, the ``renv/`` directory in the main directory of this sproject has been set as a symbolic link to the renv library located on the docker image. \
-The docker image build is set by the ``Dockerfile`` located in the main directory and you can change this behavior by editing the *Install the required R libraries on the docker image* section. Don't forget to also change the ``renv/`` link into a directory.
+Therefore, the ``renv/`` directory in the main directory of this project has been set as a symbolic link to the renv library located on the docker image, in the ``/home/rstudio`` directory. \
+To change this behavior, edit the ``install.R`` file located in the main directory. Don't forget to also change the ``renv`` link into an actual ``renv/`` directory.
+
+The prefered way to install additional R packages and manage them with renv is to use the ``install.packages()``
+command within an R session and to update the ``renv.lock`` file using the ``renv::snapshot(type="all")`` command. \
+As alternatives, you could :
+1. directly edit the ``renv.lock`` file - ⚠️ be sure to know what you are doing though. \
+OR
+2. add the ``install.packages()`` command to the ``install.R`` file. However, this will not update the project's ``renv.lock`` file unless you use ``renv::snapshot()`` in an R session.
+
+⚠️ If using Renku, whatever you do, don't forget to commit and push your changes to save them. ⚠️
 
 ### Python dependencies
 
-The required dependencies can be listed in the ``requirements.txt`` file located in the main directory. \
+The required python packages can be listed in the ``requirements.txt`` file located in the main directory. \
 They will be installed on the docker image with ``pip3`` (see the ``Dockerfile`` in the main directory).
 
 ### Version control
